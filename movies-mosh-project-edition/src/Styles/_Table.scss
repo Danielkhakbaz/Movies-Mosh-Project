@@ -1,0 +1,33 @@
+@mixin centerTextAlign() {
+    text-align: center;
+}
+@mixin pointerCursor() {
+    cursor: pointer;
+}
+$grayColor: gray;
+
+.table__p--length {
+    @include centerTextAlign();
+    font-size: 35px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+.table__thead {
+    @include centerTextAlign();
+}
+.table__thead--heading {
+    @include pointerCursor();
+}
+.table__thead--icon {
+    margin-left: 14px;
+}
+.table__tbody {
+    @include centerTextAlign();
+}
+.table__button--like {
+    @include pointerCursor();
+    &:hover {
+        color: $grayColor;
+        transition: 0.2s;
+    }
+}
