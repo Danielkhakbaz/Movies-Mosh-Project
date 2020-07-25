@@ -6,98 +6,98 @@ import Joi from "joi-browser";
 
 class Form extends Component {
     state = {
-        data: {},
-        errors: {},
+        Data: {},
+        Errors: {},
     };
-    validate = () => {
-        const { data } = this.state;
+    Validate = () => {
+        const { Data } = this.state;
 
-        const option = { abortEarly: false };
-        const { error } = Joi.validate(data, this.schema, option);
+        const Option = { abortEarly: false };
+        const { error } = Joi.validate(Data, this.schema, Option);
         if (!error) {
             return null;
         }
 
-        const errors = {};
-        for (let item of error.details) {
-            errors[item.path[0]] = item.message;
+        const Errors = {};
+        for (let Item of error.details) {
+            Errors[Item.path[0]] = item.message;
         }
-        return errors;
+        return Errors;
     };
-    handleSubmitButton = (e) => {
+    HandleSubmitButton = (e) => {
         const { match } = this.props;
 
-        const errors = this.validate();
-        this.setState({ errors: errors || {} });
+        const Errors = this.Validate();
+        this.setState({ Errors: Errors || {} });
         if (match.params.id) {
-            this.handleSaveButton();
+            this.HandleSaveButton();
         }
 
         e.preventDefault();
     };
-    handleSaveButton = () => {
-        const { data } = this.state;
+    HandleSaveButton = () => {
+        const { Data } = this.state;
         const { history } = this.props;
 
-        saveMovie(data);
+        saveMovie(Data);
         return history.push("/Movies");
     };
-    validateMessage = ({ name, value }) => {
-        const data = { [name]: value };
-        const schema = { [name]: this.schema[name] };
-        const { error } = Joi.validate(data, schema);
+    ValidateMessage = ({ Name, Value }) => {
+        const Data = { [Name]: Value };
+        const schema = { [Name]: this.schema[Name] };
+        const { error } = Joi.Validate(Data, schema);
         return error ? error.details[0].message : null;
     };
-    handleInputChange = ({ currentTarget: input }) => {
-        const { data, errors } = this.state;
-        
-        const allErrors = { ...errors };
-        const errorMessage = this.validateMessage(input);
+    HandleInputChange = ({ currentTarget: Input }) => {
+        const { Data, Errors } = this.state;
+
+        const allErrors = { ...Errors };
+        const errorMessage = this.ValidateMessage(Input);
         if (errorMessage) {
-            allErrors[input.name] = errorMessage;
+            allErrors[Input.name] = errorMessage;
         } else {
-            delete allErrors[input.name];
+            delete allErrors[Input.name];
         }
 
-        const allData = { ...data };
-        allData[input.name] = input.value;
+        const allData = { ...Data };
+        allData[Input.name] = Input.value;
 
-        this.setState({ data: allData, errors: allErrors });
+        this.setState({ Data: allData, Errors: allErrors });
     };
-    renderSubmitButton = (label) => {
+    RenderSubmitButton = (label) => {
         return (
             <button
                 className="btn btn-primary"
-                disabled={this.validate()}
-                onClick={(e) => this.handleSubmitButton(e)}
+                disabled={this.Validate()}
+                onClick={(e) => this.HandleSubmitButton(e)}
             >
                 {label}
             </button>
         );
     };
-    renderInputForm = (name, label, type) => {
-        const { data, errors } = this.state;
+    RenderInputForm = (name, label, type) => {
+        const { Data, Errors } = this.state;
         return (
             <Input
                 name={name}
                 label={label}
                 type={type}
-                value={data[name]}
-                errors={errors[name]}
-                onChange={this.handleInputChange}
+                value={Data[name]}
+                errors={Errors[name]}
+                onChange={this.HandleInputChange}
             />
         );
     };
-    renderOptionForm = (name, label, genres) => {
-        const { data, errors } = this.state;
+    RenderOptionForm = (name, label, genres) => {
+        const { Data, Errors } = this.state;
         return (
             <Option
                 name={name}
                 label={label}
                 genres={genres}
-                value={data[name]}
-                errors={errors[name]}
-                onChange={this.handleInputChange}
+                value={Data[name]}
+                errors={Errors[name]}
+                onChange={this.HandleInputChange}
             />
         );
     };
